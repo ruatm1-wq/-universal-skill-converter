@@ -1,51 +1,202 @@
 # Universal Skill Converter 🪄
 
-**万能 AI Agent Skill 格式转换器**
+**Convert any AI agent skill file to any format — instantly.**
 
-一键转换 skill 文件到任意 AI 工具格式。支持 10 种主流 AI Agent。
+Support 10 major AI coding agents with auto-detection of source format, safe file handling, and zero config required.
 
-## 支持的格式
+## Supported Agents
 
-| 工具 | 格式 | 说明 |
-|------|------|------|
-| 🤖 Reasonix Code | `.reasonix/skills/<name>.md` | 编程自动化助手 |
-| 🧠 Hermes Agent | `~/.hermes/skills/<name>/SKILL.md` | AI 对话与知识管理 |
-| ⚡ OpenCode | `~/.config/opencode/skills/<name>/SKILL.md` | 独立编程终端 |
-| 🌀 Claude Code | `.claude/plugins/<name>/SKILL.md` | Anthropic 官方 |
-| 🔵 OpenAI Codex | `.agents/plugins/<name>/SKILL.md` | OpenAI 编程代理 |
-| 🖍️ Cursor | `.cursor/rules/<name>.mdc` | AI 代码编辑器 |
-| 👾 GitHub Copilot | `.github/copilot-instructions.md` | GitHub 编程助手 |
-| ▶️ Continue.dev | `~/.continue/config.json` | 开源编程助手 |
-| 🛠️ Aider | `CONVENTIONS.md` | 终端编程助手 |
-| 📦 Skills CLI | `.skills/<name>/SKILL.md` | 通用 CLI 工具 |
+| Agent | Format | Description |
+|-------|--------|-------------|
+| 🤖 Reasonix Code | `.reasonix/skills/<name>.md` | AI coding assistant |
+| 🧠 Hermes Agent | `~/.hermes/skills/<name>/SKILL.md` | AI conversation & knowledge |
+| ⚡ OpenCode | `~/.config/opencode/skills/<name>/SKILL.md` | AI coding terminal |
+| 🌀 Claude Code | `.claude/plugins/<name>/SKILL.md` | Anthropic's coding agent |
+| 🔵 OpenAI Codex | `.agents/plugins/<name>/SKILL.md` | OpenAI coding agent |
+| 🖍️ Cursor | `.cursor/rules/<name>.mdc` | AI code editor |
+| 👾 GitHub Copilot | `.github/copilot-instructions.md` | GitHub's AI assistant |
+| ▶️ Continue.dev | `~/.continue/config.json` | Open-source coding agent |
+| 🛠️ Aider | `CONVENTIONS.md` | Terminal AI pair programmer |
+| 📦 Skills CLI | `.skills/<name>/SKILL.md` | Universal skills tool |
 
-## 用法
+## Quick Start
 
 ```bash
-# 从 URL 安装到指定工具
-python universal-skill-converter.py https://.../SKILL.md --to reasonix,hermes,opencode
+# Install a skill from URL to multiple agents
+python universal-skill-converter.py https://example.com/SKILL.md --to reasonix,hermes,opencode
 
-# 安装到全部 10 个工具
+# Install to ALL 10 supported agents at once
 python universal-skill-converter.py skill.md --to all
 
-# 导出为特定格式（不安装）
+# Export to a specific format without installing
 python universal-skill-converter.py skill.md --export cursor
 
-# 查看 skill 信息
+# Inspect a skill file (auto-detect format)
 python universal-skill-converter.py skill.md --info
 
-# 列出所有支持的 AI Agent
+# List all supported agents
 python universal-skill-converter.py --list
 ```
 
-## 安全特性
+## Installation
 
-- ✅ 自动检测源格式
-- ✅ YAML frontmatter 校验
-- ✅ 只读文件操作（不会删除/修改已有文件）
-- ✅ 不收集任何数据
-- ✅ 不联网（除非指定 URL 安装）
+No installation needed — just download the script and run:
 
-## 许可证
+```bash
+curl -O https://raw.githubusercontent.com/ruatm1-wq/-universal-skill-converter/main/universal-skill-converter.py
+python universal-skill-converter.py --list
+```
+
+Requires **Python 3.6+** only. Zero external dependencies.
+
+## Features
+
+### 🔄 Auto-Format Detection
+
+The converter automatically detects the source format by analyzing:
+- File extension (`.mdc`, `.md`, `.json`)
+- YAML frontmatter fields (`runAs`, `allowed-tools`, `globs`, etc.)
+- Content structure (markdown heading, JSON, etc.)
+
+No need to tell it what format you're converting from.
+
+### 🔒 Security First
+
+- **Read-only** — never modifies or deletes existing files
+- **No data collection** — fully offline unless you specify a URL
+- **YAML validation** — rejects malformed skills before writing
+- **Scope-confined** — only writes to predefined skill directories
+
+### 🗺️ What's a "Skill"?
+
+Skills are reusable instruction sets that teach AI agents specific workflows, guidelines, or capabilities. They typically contain:
+
+```yaml
+---
+name: my-skill
+description: What this skill does
+---
+# Follow these instructions when...
+```
+
+Different AI agents store skills in different paths and formats. This converter bridges them all.
+
+## How It Works
+
+```
+Any skill file → Auto-detect format → Parse into unified dict
+                                        ↓
+                    Render to target format → Write to correct path
+```
+
+The conversion pipeline:
+
+1. **Detect** — identifies the source format (file path, YAML fields, content structure)
+2. **Parse** — extracts name, description, body, and extra fields into a universal dictionary
+3. **Render** — generates the target format with correct frontmatter, template, and file structure
+4. **Install** — creates subdirectories if needed, writes plugin.json for Claude/Codex, etc.
+
+## Examples
+
+### Convert a Cursor `.mdc` to Hermes format
+
+```bash
+python universal-skill-converter.py my-rule.mdc --to hermes
+```
+
+### Download a skill from GitHub and install everywhere
+
+```bash
+python universal-skill-converter.py \
+  https://raw.githubusercontent.com/org/repo/main/skills/my-skill/SKILL.md \
+  --to all
+```
+
+### Export as GitHub Copilot instructions
+
+```bash
+python universal-skill-converter.py skill.md --export github-copilot
+```
+
+### Preview what the converter detected
+
+```bash
+python universal-skill-converter.py some-skill.md --info
+```
+
+## Security Considerations
+
+This tool only writes to specific directories under your home folder or current working directory:
+
+| Agent | Writes To |
+|-------|-----------|
+| Reasonix | `~/.reasonix/skills/` |
+| Hermes | `~/.hermes/skills/` |
+| OpenCode | `~/.config/opencode/skills/` |
+| Claude/Codex | `.claude/plugins/` or `.agents/plugins/` (CWD) |
+| Cursor | `.cursor/rules/` (CWD) |
+| Others | CWD or home directory |
+
+It will never access system directories, modify existing files, or exfiltrate data.
+
+## File Format Reference
+
+### Generic YAML Frontmatter (most common)
+
+```yaml
+---
+name: skill-name
+description: Brief description
+---
+Body content in markdown...
+```
+
+### Cursor `.mdc`
+
+```yaml
+---
+description: Description
+globs: **/*.ts
+---
+```
+
+### Continue.dev JSON
+
+```json
+{
+  "name": "skill-name",
+  "description": "...",
+  "systemPrompt": "..."
+}
+```
+
+### Plain Markdown (Copilot, Aider)
+
+```markdown
+# Skill Name
+
+> Description
+
+Body content...
+```
+
+## Why This Exists
+
+Every AI coding agent has its own skill/plugin format. If you find a great skill on GitHub written for Claude Code, you can't easily use it with Cursor or OpenCode — unless you manually reformat it.
+
+This converter is the **universal adapter**: one skill file, any AI agent, zero manual conversion.
+
+## Roadmap
+
+- [ ] More agent formats (Windsurf, Kilo Code, Cline, Roo Code)
+- [ ] Batch conversion (convert an entire skill library)
+- [ ] GitHub marketplace integration
+- [ ] Web-based converter UI
+
+## Contributing
+
+PRs welcome! Fork → add a new agent format to `AGENTS` dict → submit.
+
+## License
 
 MIT
