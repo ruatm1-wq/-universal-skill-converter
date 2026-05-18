@@ -2,6 +2,8 @@
 
 **Convert any AI agent skill file to any format — instantly.**
 
+[🇨🇳 中文版 (Chinese)](README.zh.md)
+
 Support 10 major AI coding agents with auto-detection of source format, safe file handling, and zero config required.
 
 ## Supported Agents
