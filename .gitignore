@@ -1,0 +1,73 @@
+# ── 密钥与配置 ──
+.env
+.env.*
+*.key
+*.pem
+*.cert
+*.crt
+secrets/
+credentials/
+
+# ── API Keys ──
+**/*api-key*
+**/*token*
+**/*secret*
+
+# ── 个人配置目录 ──
+.reasonix/
+.hermes/
+.config/
+.local/
+.gitconfig
+
+# ── IDE / 编辑器 ──
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ── 依赖 ──
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# ── 构建产物 ──
+build/
+dist/
+*.spec
+*.exe
+*.zip
+*.msi
+
+# ── 系统文件 ──
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# ── 日志 ──
+*.log
+
+# ── 项目临时文件 ──
+temp/
+tmp/
+*.tmp
+
+# ── Word 文档 / 办公文件 ──
+*.docx
+*.pptx
+*.xlsx
+
+# ── 图片 / 截图 ──
+*.png
+*.jpg
+*.jpeg
+*.gif
+screenshots/
+vision_capture.png
+
+# ── 音频 ──
+*.wav
+*.mp3
