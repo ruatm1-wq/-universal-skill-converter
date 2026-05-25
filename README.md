@@ -1,5 +1,11 @@
 # Universal Skill Converter 🪄
 
+<p align="center">
+  <img src="https://img.shields.io/github/license/ruatm1-wq/universal-skill-converter?style=flat-square" alt="License">
+  <img src="https://img.shields.io/github/stars/ruatm1-wq/universal-skill-converter?style=flat-square" alt="Stars">
+  <img src="https://img.shields.io/badge/PRs-welcome-brightgreen?style=flat-square" alt="PRs Welcome">
+</p>
+
 **Convert any AI agent skill file to any format — instantly.**
 
 [🇨🇳 中文版 (Chinese)](README.zh.md)
